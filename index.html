@@ -112,9 +112,9 @@ h1 {
     color: #8b0000;
 }
 
-/* BOTÓN */
+/* BOTONES */
 button {
-    margin-top: 15px;
+    margin: 8px;
     padding: 12px 22px;
     font-size: 1em;
     background: #d63384;
@@ -155,9 +155,14 @@ button:hover {
     <p id="typedText"></p>
     <p id="contador"></p>
 
-    <!-- BOTÓN -->
-    <button onclick="playMusic()">
-        ¿Quieres ser mi San Valentín?
+    <!-- BOTÓN MENSAJE -->
+    <button onclick="mensajeAmor()">
+        💖 ¿Quieres ser mi San Valentín?
+    </button>
+
+    <!-- BOTÓN MÚSICA -->
+    <button onclick="reproducirMusica()">
+        🎵 Reproducir música
     </button>
 </div>
 
@@ -239,13 +244,16 @@ function actualizarContador() {
 setInterval(actualizarContador, 1000);
 actualizarContador();
 
-/* 🎵 BOTÓN + AUDIO */
-function playMusic() {
+/* 💖 MENSAJE */
+function mensajeAmor() {
     alert("💖 Te amo, este fin iremos al Coliseo Divos para ver a los Olaya 💖");
+}
 
+/* 🎵 MÚSICA */
+function reproducirMusica() {
     const music = document.getElementById("music");
     music.play().catch(err => {
-        console.error("No se pudo reproducir el audio:", err);
+        console.error("Error al reproducir música:", err);
     });
 }
 </script>
