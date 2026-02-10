@@ -1,262 +1,81 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Para mi amor ❤️</title>
+    <meta charset="UTF-8">
+    <title>Para mi esposa ❤️</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 60px;
+        }
 
-<style>
-body {
-    margin: 0;
-    background: #fbe8d3;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    overflow: hidden;
-}
+        h1 {
+            color: #b30059;
+            margin-bottom: 30px;
+        }
 
-h1 {
-    color: #8b0000;
-    margin-top: 20px;
-}
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
 
-/* ESCENA */
-#scene {
-    position: relative;
-    width: 100%;
-    height: 65vh;
-}
+        #loveBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
 
-/* TRONCO Y RAMAS */
-#trunk {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 28px;
-    height: 180px;
-    background: #8b4513;
-    transform: translateX(-50%);
-    border-radius: 8px;
-}
+        #musicBtn {
+            background-color: #6a4cff;
+            color: white;
+        }
 
-.branch {
-    position: absolute;
-    width: 70px;
-    height: 12px;
-    background: #8b4513;
-    top: 50px;
-    border-radius: 6px;
-}
-
-.branch.left {
-    left: -60px;
-    transform: rotate(-30deg);
-}
-
-.branch.right {
-    right: -60px;
-    transform: rotate(30deg);
-}
-
-/* CORAZONES */
-.heart {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: #ff6fae;
-    transform: rotate(45deg);
-    animation: floatUp linear forwards;
-}
-
-.heart::before,
-.heart::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: #ff6fae;
-    border-radius: 50%;
-}
-
-.heart::before {
-    top: -8px;
-    left: 0;
-}
-
-.heart::after {
-    left: -8px;
-    top: 0;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-    100% { transform: translateY(-160px) rotate(45deg); opacity: 0; }
-}
-
-/* TEXTO */
-#text {
-    margin-top: 10px;
-}
-
-#contador {
-    font-weight: bold;
-    color: #8b0000;
-}
-
-/* MENSAJE */
-#sideMessage {
-    position: absolute;
-    top: 30%;
-    right: 5%;
-    width: 260px;
-    text-align: left;
-    font-size: 0.95em;
-    color: #8b0000;
-}
-
-/* BOTONES */
-button {
-    margin: 8px;
-    padding: 12px 22px;
-    font-size: 1em;
-    background: #d63384;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #b02a6f;
-}
-</style>
+        #mensaje {
+            display: none;
+            margin-top: 30px;
+            font-size: 22px;
+            color: #800040;
+        }
+    </style>
 </head>
-
 <body>
 
-<h1>Para mi amor ❤️</h1>
+    <h1>❤️ Para mi esposa ❤️</h1>
 
-<div id="scene">
-    <div id="trunk">
-        <div class="branch left"></div>
-        <div class="branch right"></div>
+    <button id="loveBtn">¿Quieres ser mi San Valentín?</button>
+    <br>
+    <button id="musicBtn">🎵 Reproducir música</button>
+
+    <div id="mensaje">
+        💖 Te amo, este fin iremos al Coliseo Divos para ver a los Olaya 💖
     </div>
-</div>
 
-<div id="sideMessage">
-    <p>
-        En un mundo lleno de hipocresía,<br>
-        máscaras y falsos sentimientos,<br>
-        tú eres mi luz, mi calma y<br>
-        la esperanza que me impulsa<br>
-        a ser mejor cada día 💖
-    </p>
-</div>
+    <audio id="music">
+        <source src="jacaranda_olaya.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
 
-<div id="text">
-    <p id="typedText"></p>
-    <p id="contador"></p>
+    <script>
+        const loveBtn = document.getElementById("loveBtn");
+        const musicBtn = document.getElementById("music");
+        const audio = document.getElementById("music");
+        const mensaje = document.getElementById("mensaje");
 
-    <!-- BOTÓN MENSAJE -->
-    <button onclick="mensajeAmor()">
-        💖 ¿Quieres ser mi San Valentín?
-    </button>
+        loveBtn.addEventListener("click", () => {
+            mensaje.style.display = "block";
+        });
 
-    <!-- BOTÓN MÚSICA -->
-    <button onclick="reproducirMusica()">
-        🎵 Reproducir música
-    </button>
-</div>
-
-<!-- AUDIO -->
-<audio id="music" loop>
-    <source src="jacaranda_olaya.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-/* 🌸 CORAZONES */
-const scene = document.getElementById("scene");
-
-function heartShape(t) {
-    return {
-        x: 16 * Math.pow(Math.sin(t), 3),
-        y: -(13 * Math.cos(t) - 5 * Math.cos(2 * t)
-           - 2 * Math.cos(3 * t) - Math.cos(4 * t))
-    };
-}
-
-function createHeart(x, y) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.style.left = `calc(50% + ${x}px)`;
-    heart.style.bottom = 220 - y + "px";
-    heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-    scene.appendChild(heart);
-    setTimeout(() => heart.remove(), 10000);
-}
-
-let t = 0;
-setInterval(() => {
-    const p = heartShape(t);
-    createHeart(p.x * 6, p.y * 6);
-    t += 0.25;
-}, 120);
-
-/* ✍️ TEXTO */
-const messages = [
-    "Mi amor por ti Stephany comenzó hace 💖",
-    "Nos conocimos el 02 de julio del 2023 ✨"
-];
-
-let msgIndex = 0;
-let charIndex = 0;
-const typedText = document.getElementById("typedText");
-
-function typeWriter() {
-    if (charIndex < messages[msgIndex].length) {
-        typedText.textContent += messages[msgIndex].charAt(charIndex);
-        charIndex++;
-        setTimeout(typeWriter, 70);
-    } else {
-        setTimeout(() => {
-            typedText.textContent = "";
-            charIndex = 0;
-            msgIndex = (msgIndex + 1) % messages.length;
-            typeWriter();
-        }, 2000);
-    }
-}
-typeWriter();
-
-/* ⏱️ CONTADOR */
-const inicio = new Date("2023-07-02T00:00:00");
-
-function actualizarContador() {
-    const ahora = new Date();
-    const diff = ahora - inicio;
-
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
-    const minutos = Math.floor(diff / (1000 * 60)) % 60;
-    const segundos = Math.floor(diff / 1000) % 60;
-
-    document.getElementById("contador").textContent =
-        `${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos`;
-}
-setInterval(actualizarContador, 1000);
-actualizarContador();
-
-/* 💖 MENSAJE */
-function mensajeAmor() {
-    alert("💖 Te amo, este fin iremos al Coliseo Divos para ver a los Olaya 💖");
-}
-
-/* 🎵 MÚSICA */
-function reproducirMusica() {
-    const music = document.getElementById("music");
-    music.play().catch(err => {
-        console.error("Error al reproducir música:", err);
-    });
-}
-</script>
+        document.getElementById("musicBtn").addEventListener("click", () => {
+            audio.play().catch(error => {
+                alert("Haz clic nuevamente para permitir el audio");
+            });
+        });
+    </script>
 
 </body>
 </html>
