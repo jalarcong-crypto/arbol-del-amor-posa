@@ -154,10 +154,14 @@ button:hover {
 <div id="text">
     <p id="typedText"></p>
     <p id="contador"></p>
-    <button id="btnLove">¿Quieres ser mi San Valentín?</button>
+
+    <!-- BOTÓN -->
+    <button onclick="playMusic()">
+        ¿Quieres ser mi San Valentín?
+    </button>
 </div>
 
-<!-- AUDIO (MISMA CARPETA QUE index.html) -->
+<!-- AUDIO -->
 <audio id="music" loop>
     <source src="jacaranda_olaya.mp3" type="audio/mpeg">
 </audio>
@@ -235,19 +239,17 @@ function actualizarContador() {
 setInterval(actualizarContador, 1000);
 actualizarContador();
 
-/* 🎵 AUDIO SOLO CON BOTÓN */
-const btn = document.getElementById("btnLove");
-const music = document.getElementById("music");
+/* 🎵 BOTÓN + AUDIO */
+function playMusic() {
+    alert("💖 Te amo, este fin iremos al Coliseo Divos para ver a los Olaya 💖");
 
-btn.addEventListener("click", () => {
-    music.play().then(() => {
-        alert("💖 Te amo, este fin iremos al Coliseo Divos para ver a los Olaya 💖");
-    }).catch(err => {
-        alert("No se pudo reproducir la música");
-        console.error(err);
+    const music = document.getElementById("music");
+    music.play().catch(err => {
+        console.error("No se pudo reproducir el audio:", err);
     });
-});
+}
 </script>
 
 </body>
 </html>
+
